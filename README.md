@@ -110,11 +110,15 @@ tail -f run_ECD.log
 
 ### Example molecule
 
-![Example molecule structure](docs/test.png)
+<p align="center">
+  <img src="docs/test.png" alt="Example molecule structure" width="360">
+</p>
 
 ### Example UV/ECD overlay
 
-![Example UV/ECD overlay](docs/test_UV_overlay_uvshift20.png)
+<p align="center">
+  <img src="docs/test_UV_overlay_uvshift20.png" alt="Example UV/ECD overlay" width="520">
+</p>
 
 ---
 
