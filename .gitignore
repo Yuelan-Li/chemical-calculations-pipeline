@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ORCA / quantum chemistry
+*.gbw
+*.densities
+*.hess
+*.cis
+*.engrad
+*.property.txt
+*.tmp
+*.ges
+*.trj
+*.out
+*.log
+
+# CREST / xTB
+crest_conformers.xyz
+crest_best.xyz
+crest_rotamers.xyz
+crest.energies
+wbo
+gfnff_topo
+coord
+coord.original
+struc.xyz
+xtbtopo.mol
+charges
+*.xtb*
+*.scoord.*
+*.history.xyz
+
+# editors / runtime
+nohup.out
+*.swp
+.DS_Store
+
+# bulky generated folders
+results/
+paper/
