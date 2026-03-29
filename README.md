@@ -1,4 +1,6 @@
-# ORCA ECD Workflow for Natural Products
+# Create the README.md file for the user to download
+
+content = """# ORCA ECD Workflow for Natural Products
 
 A lightweight and reproducible workflow for conformer generation, filtering, ORCA input preparation, quantum chemical calculation, and ECD/UV post-processing.
 
@@ -14,9 +16,9 @@ v1.0.0 (stable, verified working)
 
 ## Features
 
-- End-to-end ECD workflow (CREST → ORCA → spectrum)
+- End-to-end ECD workflow (CREST -> ORCA -> spectrum)
 - CREST-based conformer sampling (GFN2-xTB)
-- Automated conformer filtering (energy + RMSD)
+- Optional conformer filtering (energy + RMSD)
 - ORCA input generation (OPT / FREQ / SP / TDDFT ECD)
 - Boltzmann-weighted UV/ECD spectrum generation
 - Experimental UV/ECD overlay visualization
@@ -26,11 +28,11 @@ v1.0.0 (stable, verified working)
 
 ## Workflow
 
-1. Conformer search using CREST  
-2. Conformer filtering to remove redundancy, if the number of conformers exceeds a user-defined threshold (default: >20)   
-3. ORCA input generation  
-4. ORCA calculations (SP + TDDFT ECD)  
-5. Spectrum extraction and Boltzmann averaging  
+1. Conformer search using CREST
+2. Optional conformer filtering when too many conformers are generated (default trigger: >20 conformers)
+3. ORCA input generation
+4. ORCA calculations (SP + TDDFT ECD)
+5. Spectrum extraction and Boltzmann averaging
 6. UV/ECD plotting (optional)
 
 ---
@@ -38,10 +40,17 @@ v1.0.0 (stable, verified working)
 ## Requirements
 
 - Linux (tested on Ubuntu 22.04.5 LTS)
-- Bash ≥ 5.1
-- Python ≥ 3.10
+- Bash >= 5.1
+- Python >= 3.10
 - CREST (tested: 3.0.2)
 - ORCA (tested: 6.1.1)
+
+Python packages used in this workflow include:
+
+- numpy
+- pandas
+- matplotlib
+- rdkit
 
 ORCA must be installed and available in PATH.
 
@@ -49,13 +58,17 @@ ORCA must be installed and available in PATH.
 
 ## Repository Structure
 
+```text
+
 .
-├── run_ECD_gold.sh
-├── scripts/
-├── src/
 ├── data/
+│   └── 20260328_ECD_calculation/
 ├── docs/
-└── README.md
+├── .gitignore
+├── README.md
+├── requirements.txt
+└── run_ECD_gold.sh
+```
 
 ---
 
@@ -65,16 +78,14 @@ ORCA must be installed and available in PATH.
 
 Supported formats:
 
-- .mol2    
+- .mol2
 
 Used for conformer search and quantum calculations.
 
----
-
 ### Experimental data (optional)
 
-- UV spectrum: .csv  
-- ECD spectrum: .csv  
+- UV spectrum: .csv
+- ECD spectrum: .csv
 
 Used only for plotting and comparison.
 
@@ -82,12 +93,28 @@ Used only for plotting and comparison.
 
 ## Quick Start
 
-nohup bash run_ECD_gold.sh \
-  --legacy-input-dir path \
-  --project-name test \
-  > run_ECD_Date.log 2>&1 &
+```bash
+nohup bash run_ECD_gold.sh \\
+  --legacy-input-dir path \\
+  --project-name test \\
+  > run_ECD.log 2>&1 &
+
+
+#Monitor progress:
 
 tail -f run_ECD.log
+```
+---
+
+## Example Output
+
+### Example molecule
+
+![Example molecule structure](docs/test.png)
+
+### Example UV/ECD overlay
+
+![Example UV/ECD overlay](docs/test_UV_overlay_uvshift20.png)
 
 ---
 
@@ -107,36 +134,28 @@ Typical outputs include:
 
 ### Conformer sampling
 
-- Too many → slow  
-- Too few → inaccurate  
+- Too many conformers -> high computational cost
+- Too few conformers -> inaccurate Boltzmann averaging
 
 Recommended:
 
-- initial: ~20 kcal/mol  
+- initial energy window: ~20 kcal/mol
 
-
----
+Conformer filtering is applied only when the number of generated conformers exceeds the threshold (default: 20).
 
 ### UV wavelength shift
 
-A wavelength shift (typically 10–30 nm) may be applied when comparing calculated and experimental UV spectra.
+Calculated UV spectra may deviate from experimental peak positions.
+In some cases, an empirical wavelength shift can be applied for plotting purposes only.
 
-This depends on:
-
-- functional  
-- basis set  
-- molecular system  
-
-Do not treat this shift as a physical correction.
-
----
+This shift is system-dependent and should not be interpreted as a physical correction.
 
 ### ECD interpretation
 
 Use:
 
-- spectral shape  
-- sign pattern  
+- spectral shape
+- sign pattern
 
 Do NOT rely on absolute wavelength alignment.
 
@@ -145,39 +164,41 @@ Do NOT rely on absolute wavelength alignment.
 ## Typical Settings
 
 ### CREST
-- GFN2-xTB  
-- methanol  
+
+- GFN2-xTB
+- methanol
 
 ### ORCA
-- CAM-B3LYP / PWPB95  
-- def2-TZVP / def2-QZVPP  
+
+- CAM-B3LYP / PWPB95
+- def2-TZVP / def2-QZVPP
 - CPCM (SMD)
 
 ---
 
 ## Applications
 
-- Natural product stereochemistry  
-- ECD prediction  
-- Conformer-dependent analysis  
-- Batch processing  
+- Natural product stereochemistry
+- ECD prediction
+- Conformer-dependent analysis
+- Batch processing
 
 ---
 
 ## Limitations
 
-- No automatic error recovery  
-- Depends on conformer quality  
-- UV may require empirical shift  
+- No automatic error recovery
+- Depends on conformer quality
+- UV may require empirical shift
 
 ---
 
 ## Design Philosophy
 
-- reproducible  
-- minimal manual intervention  
-- modular  
-- user friendly  
+- reproducible
+- minimal manual intervention
+- modular
+- user friendly
 
 ---
 
