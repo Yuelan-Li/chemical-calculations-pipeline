@@ -1,6 +1,4 @@
-# Create the README.md file for the user to download
-
-content = """# ORCA ECD Workflow for Natural Products
+# ORCA ECD Workflow for Natural Products
 
 A lightweight and reproducible workflow for conformer generation, filtering, ORCA input preparation, quantum chemical calculation, and ECD/UV post-processing.
 
